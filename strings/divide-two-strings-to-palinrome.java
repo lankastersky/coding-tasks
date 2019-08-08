@@ -9,6 +9,7 @@ Example:
 "abcdefgh" and "dasedcba" return 4, since we can split the strings like "abcd" and "dcba"
 
 https://cs.stackexchange.com/questions/109662/divide-two-strings-to-form-palindrome
+interviewing.io
 */
 
   class Solution {
