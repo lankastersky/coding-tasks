@@ -23,10 +23,10 @@ import java.util.*;
 
 class Solution {
     public int[] intersection(int[] nums1, int[] nums2) {
-        Set<Integer> first = new HashSet<>(
-            Arrays.stream(nums1).boxed().collect(Collectors.toList()));
-        Set<Integer> second = new HashSet<>(
-            Arrays.stream(nums2).boxed().collect(Collectors.toList()));
+        Set<Integer> first =
+            Arrays.stream(nums1).boxed().collect(Collectors.toSet());
+        Set<Integer> second =
+            Arrays.stream(nums2).boxed().collect(Collectors.toSet());
         first.retainAll(second);
         return first.stream().mapToInt(Integer::intValue).toArray();
     }
