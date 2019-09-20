@@ -21,26 +21,64 @@ Output:
 https://leetcode.com/problems/subsets-ii/
 */
 
+import java.util.*;
+
 class Solution {
   public List<List<Integer>> subsetsWithDup(int[] nums) {
-    Arrays.sort(nums);
+    NavigableMap<Integer, Integer> freqMap = buildFreqMap(nums);
     List<List<Integer>> res = new ArrayList<>();
-    dfs(nums, 0, new ArrayList<>(), res);
+    dfs(0, new ArrayList<>(), res, freqMap);
     return res;
   }
 
-  void dfs(int[] nums, int ind, ArrayList<Integer> cur, List<List<Integer>> res) {
-    int n = nums.length;
+  NavigableMap<Integer, Integer> buildFreqMap(int[] nums) {
+    NavigableMap<Integer, Integer> freqMap = new TreeMap<>();
+    for (int a : nums) {
+      freqMap.put(a, freqMap.getOrDefault(a, 0) + 1);
+    }
+    return freqMap;
+  }
+
+  void dfs(
+    int ind, ArrayList<Integer> cur, 
+    List<List<Integer>> res, 
+    NavigableMap<Integer, Integer> freqMap) {
+    
     res.add(new ArrayList<>(cur));
-    for (int i = ind; i < n; i++) {
-      if (i > ind && nums[i - 1] == nums[i]) {
-        continue;
+    
+    List<Integer> keys = new ArrayList<>(freqMap.keySet());
+    for (int i = ind; i < keys.size(); i++) {
+      int key = keys.get(i);
+      if (freqMap.get(key) > 0) {
+        freqMap.put(key, freqMap.get(key) - 1);
+        cur.add(key);
+        dfs(i, cur, res, freqMap);
+        cur.remove(cur.size() - 1);
+        freqMap.put(key, freqMap.get(key) + 1);
       }
-      cur.add(nums[i]);
-      dfs(nums, i + 1, cur, res);
-      cur.remove(cur.size() - 1);
     }
   }
+  
+  // A working solution.
+//   public List<List<Integer>> subsetsWithDup(int[] nums) {
+//     Arrays.sort(nums);
+//     List<List<Integer>> res = new ArrayList<>();
+//     dfs(nums, 0, new ArrayList<>(), res);
+//     return res;
+//   }
+
+//   void dfs(int[] nums, int ind, ArrayList<Integer> cur, List<List<Integer>> res) {
+//     int n = nums.length;
+//     res.add(new ArrayList<>(cur));
+//     for (int i = ind; i < n; i++) {
+//       if (i > ind && nums[i - 1] == nums[i]) {
+//         continue;
+//       }
+//       cur.add(nums[i]);
+//       dfs(nums, i + 1, cur, res);
+//       cur.remove(cur.size() - 1);
+//     }
+//   }
 
   // Also a working solution.
 //   void dfs(int[] nums, int ind, ArrayList<Integer> cur, List<List<Integer>> res) {
