@@ -18,6 +18,7 @@ https://leetcode.com/problems/longest-increasing-subsequence/
 
 class Solution {
 
+  // Based on https://leetcode.com/problems/longest-increasing-subsequence/solution/
   public int lengthOfLIS(int[] nums) {
     int n = nums.length;
     if (n <= 1) {
@@ -35,6 +36,25 @@ class Solution {
     }
     return res;
   }
+  
+  // Using TreeSet
+  // public int lengthOfLIS(int[] nums) {
+  //   TreeSet<Integer> set = new TreeSet<>();
+  //   int res = 0;
+  //   int cnt = 0;
+  //   for (int n : nums) {
+  //     Integer next = set.ceiling(n);
+  //     set.add(n);
+  //     if (next == null) {
+  //       cnt = set.headSet(n, true).size();
+  //     } else {
+  //       cnt = set.headSet(next).size();
+  //       set.remove(next);
+  //     }
+  //     res = Math.max(res, cnt);
+  //   }
+  //   return res;
+  // }
   
   // O(n^2)
   // public int lengthOfLIS(int[] nums) {
