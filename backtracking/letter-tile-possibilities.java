@@ -23,7 +23,33 @@ https://leetcode.com/problems/letter-tile-possibilities/
 leetcode - Google Online Assessment
 */
 
-  class Solution {
+class Solution {
+   
+  // Based on https://leetcode.com/problems/letter-tile-possibilities/discuss/308284/Concise-java-solution
+  public int numTilePossibilities(String tiles) {
+    int[] cnt = new int[26];
+    for (char c : tiles.toCharArray()) {
+      cnt[c - 'A']++;
+    }
+    return dfs(cnt);
+  }
+  
+  int dfs(int[] cnt) {
+    int sum = 0;
+    for (int i = 0; i < cnt.length; i++) {
+      if (cnt[i] == 0) {
+        continue;
+      }
+      sum++;
+      cnt[i]--;
+      sum += dfs(cnt);
+      cnt[i]++;
+    }
+    return sum;
+  }
+   
+   /* Too complicated */
+   /*
     public int numTilePossibilities(String tiles) {
       if (tiles == null || tiles.isEmpty()) {
         return 0;
@@ -70,4 +96,5 @@ leetcode - Google Online Assessment
     }
     System.out.println(sb);
   }
+  */
 }
